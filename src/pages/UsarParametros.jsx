@@ -1,24 +1,27 @@
-import { useParams, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import { users } from '../data/users'; 
 
+const UsarParametros = () => {
+  const { id } = useParams();
 
-function UsarParametros() {
-  const { id } = useParams(); 
+  const user = users.find((u) => u.id === parseInt(id));
 
-  const navigate = useNavigate();
-
-    useEffect(() => {
-    if (id === '50') { 
-      navigate('/'); 
-    }
-  }, [id, navigate])
+  if (!user) {
+    return (
+      <div style={{ padding: '40px', textAlign: 'center' }}>
+        <h2>Usuário não encontrado!</h2>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h1>Post {id}</h1>
-      <p>Você está vendo o produto post: {id}</p>
+    <div style={{ padding: '40px', textAlign: 'center' }}>
+      <h1>{user.name}</h1>
+      <p>Idade: {user.age} anos</p>
+      <p>Status: {user.isStudent ? 'É estudante' : 'Não é estudante'}</p>
     </div>
   );
-}
+};
 
 export default UsarParametros;
